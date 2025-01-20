@@ -1,18 +1,14 @@
-require('dotenv').config()
-const express = require("express");
-const path = require("path");
-const routes = require("./routes/routes");
-const connectToDb = require("./database/db");
+// server.mjs
+import { createServer } from 'node:http';
 
-connectToDb();
-const app = express();
-const port = process.env.PORT || 3000;
+const server = createServer((req, res) => {
+  res.writeHead(200, { 'Content-Type': 'text/plain' });
+  res.end('Hello World!\n');
+});
 
-app.set("view engine", "ejs");
-app.use(express.static(path.join(__dirname, "public")));
-app.use(express.urlencoded());
-app.use(routes);
+// starts a simple http server locally on port 3000
+server.listen(3000, '127.0.0.1', () => {
+  console.log('Listening on 127.0.0.1:3000');
+});
 
-app.listen(port, () =>
-  console.log(`Servidor rodando em http://localhost:${port}`)
-);
+// run with `node server.mjs`
