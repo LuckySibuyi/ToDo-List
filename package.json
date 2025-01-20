@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/LuckySibuyi/ToDo-List/issues"
   },
-  "homepage": "https://github.com/LuckySibuyi/ToDo-List#readme"
+  "homepage": "https://github.com/LuckySibuyi/ToDo-List#readme",
+  "dependencies": {
+    "express": "^4.21.2"
+  }
 }
