@@ -7,22 +7,24 @@ const methodOverride = require('method-override');
 const app = express();
 const PORT = process.env.PORT || 5000;
 
+// Middleware
 app.use(express.urlencoded({ extended: true }));
-app.use(express.json);
+app.use(express.json());
 
-//static files
+// Static files
 app.use(express.static('public'));
 
-//tamplate engine
+// Template engine
 app.use(expressLayout);
 app.set('layout', './layout/main');
 app.set('view engine', 'ejs');
 
-//home
+// Home route
 app.get('/', (req, res) => {
-res.send('Hey there');
+  res.render('index');
 });
 
+// Start server
 app.listen(PORT, () => {
-    console.log(`App listening on port ${PORT}`);
-  });
+  console.log(`App listening on port ${PORT}`);
+});
