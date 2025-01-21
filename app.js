@@ -1,13 +1,13 @@
-require('.env').config();
+require('dotenv').config();
 
 const express = require('express');
-const expressEjsLayouts = require('express-ejs-layouts');
-const expressLayout = require(expressEjsLayouts);
+const expressLayout = require('express-ejs-layouts');
+const methodOverride = require('method-override');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-app.use(expressLayout.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json);
 
 //static files
@@ -23,6 +23,6 @@ app.get('/', (req, res) => {
 res.send('Hey there');
 });
 
-app.listen(port, () =>{
-    console.log('App listeningon port ${port}')
-});
+app.listen(PORT, () => {
+    console.log(`App listening on port ${PORT}`);
+  });
