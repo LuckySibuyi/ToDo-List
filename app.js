@@ -19,10 +19,66 @@ app.use(expressLayout);
 app.set('layout', './layout/main');
 app.set('view engine', 'ejs');
 
+// Sample task storage (in-memory)
+let tasks = [];
 // Home route
 app.get('/', (req, res) => {
-  res.render('index');
+  res.render('index', { tasks: tasks });
 });
+
+app.post('/add-task', (req, res) => {
+    const { title, description } = req.body;
+    
+    // Add new task to the tasks array
+    const newTask = {
+      id: tasks.length + 1,
+      title: title,
+      description: description,
+      completed: false
+    };
+  
+    tasks.push(newTask);
+  
+    // Redirect back to the homepage to display the updated list
+    res.redirect('/');
+  });
+  
+  
+  app.post('/edit-task/:id', (req, res) => {
+    const taskId = parseInt(req.params.id);
+    const { title, description } = req.body;
+  
+    // Find and update the task
+    const task = tasks.find((t) => t.id === taskId);
+    if (task) {
+      task.title = title;
+      task.description = description;
+    }
+  
+    res.redirect('/');
+  });
+  
+  // Route to mark task as completed
+  app.post('/complete-task/:id', (req, res) => {
+    const taskId = parseInt(req.params.id);
+    
+    // Find the task and mark it as completed
+    const task = tasks.find(t => t.id === taskId);
+    if (task) task.completed = true;
+    
+    res.redirect('/');
+  });
+  
+  // Route to delete task
+  app.post('/delete-task/:id', (req, res) => {
+    const taskId = parseInt(req.params.id);
+    
+    // Remove the task from the tasks array
+    tasks = tasks.filter(t => t.id !== taskId);
+    
+    res.redirect('/');
+  });
+  
 
 // Start server
 app.listen(PORT, () => {
