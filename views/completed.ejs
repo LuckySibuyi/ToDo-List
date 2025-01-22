@@ -1,0 +1,52 @@
+<!-- completed.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Completed Tasks</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+  <div class="container mt-5">
+    <h1>Completed Tasks</h1>
+    <ul class="list-group mt-3">
+      <% tasks.forEach((task) => { %>
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          <span><%= task.title %></span>
+          <form action="/delete-task/<%= task.id %>" method="POST" style="display: inline;">
+            <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+          </form>
+        </li>
+      <% }); %>
+    </ul>
+
+    <!-- Pagination -->
+    <nav aria-label="Completed Tasks Pagination">
+      <ul class="pagination justify-content-center mt-5">
+        <% const startPage = Math.max(current - 4, 1); %>
+        <% const endPage = Math.min(current + 4, pages); %>
+
+        <!-- First Page -->
+        <li class="page-item <%= current === 1 ? 'disabled' : '' %>" aria-disabled="<%= current === 1 %>">
+          <a href="/completed?page=1" class="page-link" tabindex="<%= current === 1 ? -1 : 0 %>">First</a>
+        </li>
+
+        <!-- Page Links -->
+        <% for (let i = startPage; i <= endPage; i++) { %>
+          <li class="page-item <%= i === current ? 'active' : '' %>">
+            <a href="/completed?page=<%= i %>" class="page-link"><%= i %></a>
+          </li>
+        <% } %>
+
+        <!-- Last Page -->
+        <li class="page-item <%= current === pages ? 'disabled' : '' %>" aria-disabled="<%= current === pages %>">
+          <a href="/completed?page=<%= pages %>" class="page-link" tabindex="<%= current === pages ? -1 : 0 %>">Last</a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

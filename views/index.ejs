@@ -1,157 +1,156 @@
+<!-- To-Do List Dashboard -->
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-    <h1 class="h2">ToDo List</h1>
-    <div class="btn-toolbar mb-2 mb-md-0">
-      <button id="addTaskButton" class="btn btn-sm btn-outline-primary">+ New Task</button>
-    </div>
+  <h1 class="h2">ToDo List</h1>
+  <div class="btn-toolbar mb-2 mb-md-0">
+    <button id="addTaskButton" class="btn btn-sm btn-outline-primary">+ New Task</button>
   </div>
-  
-  <!-- Add Task Form -->
-  <div id="addTaskForm" class="card mt-3 shadow-sm d-none">
-    <div class="card-body">
-      <form action="/add-task" method="POST">
-        <div class="mb-3">
-          <label for="taskTitle" class="form-label">Task Title</label>
-          <input
-            type="text"
-            id="taskTitle"
-            name="title"
-            class="form-control"
-            placeholder="Enter task title"
-            required
-          />
+</div>
+
+<!-- Add Task Form -->
+<div id="addTaskForm" class="card mt-3 shadow-sm d-none">
+  <div class="card-body">
+    <form action="/add-task" method="POST">
+      <div class="mb-3">
+        <label for="taskTitle" class="form-label">Task Title</label>
+        <input type="text" id="taskTitle" name="title" class="form-control" placeholder="Enter task title" required />
+      </div>
+      <div class="mb-3">
+        <label for="taskDescription" class="form-label">Task Description</label>
+        <textarea id="taskDescription" name="description" class="form-control" rows="4" placeholder="Enter task description" required></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary">Add Task</button>
+      <button type="button" id="cancelFormBtn" class="btn btn-secondary">Cancel</button>
+    </form>
+  </div>
+</div>
+
+<!-- Task List -->
+<ul id="taskList" class="list-group mt-3">
+  <% tasks.forEach((task) => { %>
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+      <span class="<%= task.completed ? 'text-decoration-line-through' : '' %>">
+        <%= task.title %>
+      </span>
+      <div class="task-actions">
+        <% if (!task.completed) { %>
+          <form action="/complete-task/<%= task.id %>" method="POST" style="display: inline;">
+            <button type="submit" class="btn btn-sm btn-success">Complete</button>
+          </form>
+        <% } %>
+        <button 
+          class="btn btn-sm btn-warning editTaskButton" 
+          data-id="<%= task.id %>" 
+          data-title="<%= task.title %>" 
+          data-description="<%= task.description %>">
+          Edit
+        </button>
+        <form action="/delete-task/<%= task.id %>" method="POST" style="display: inline;">
+          <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+        </form>
+      </div>
+    </li>
+  <% }); %>
+</ul>
+
+<!-- Edit Task Modal -->
+<div class="modal fade" id="editTaskModal" tabindex="-1" aria-labelledby="editTaskModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form id="editTaskForm" action="" method="POST">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editTaskModalLabel">Edit Task</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <div class="mb-3">
-          <label for="taskDescription" class="form-label">Task Description</label>
-          <textarea
-            id="taskDescription"
-            name="description"
-            class="form-control"
-            rows="4"
-            placeholder="Enter task description"
-            required
-          ></textarea>
+        <div class="modal-body">
+          <div class="mb-3">
+            <label for="editTaskTitle" class="form-label">Task Title</label>
+            <input type="text" id="editTaskTitle" name="title" class="form-control" required />
+          </div>
+          <div class="mb-3">
+            <label for="editTaskDescription" class="form-label">Task Description</label>
+            <textarea id="editTaskDescription" name="description" class="form-control" rows="4" required></textarea>
+          </div>
         </div>
-        <button type="submit" class="btn btn-primary">Add Task</button>
-        <button type="button" id="cancelFormBtn" class="btn btn-secondary">Cancel</button>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save Changes</button>
+        </div>
       </form>
     </div>
   </div>
-  
-  <!-- Task List -->
-<ul id="taskList" class="list-group">
-    <% tasks.forEach((task) => { %>
-      <li class="list-group-item d-flex justify-content-between align-items-center">
-        <span class="<%= task.completed ? 'text-decoration-line-through' : '' %>">
-          <%= task.title %>
-        </span>
-        <div>
-          <% if (!task.completed) { %>
-            <form
-              action="/complete-task/<%= task.id %>"
-              method="POST"
-              style="display: inline;"
-            >
-              <button type="submit" class="btn btn-sm btn-success">Complete</button>
-            </form>
-          <% } %>
-          <button 
-            class="btn btn-sm btn-warning editTaskButton" 
-            data-id="<%= task.id %>" 
-            data-title="<%= task.title %>" 
-            data-description="<%= task.description %>">
-            Edit
-          </button>
-          <form
-            action="/delete-task/<%= task.id %>"
-            method="POST"
-            style="display: inline;"
-          >
-            <button type="submit" class="btn btn-sm btn-danger">Delete</button>
-          </form>
-        </div>
+</div>
+
+<!-- Pagination -->
+<nav aria-label="Dashboard Pagination">
+  <ul class="pagination justify-content-center mt-5">
+    <% const startPage = Math.max(current - 4, 1); %>
+    <% const endPage = Math.min(current + 4, pages); %>
+
+    <!-- First Page -->
+    <li class="page-item <%= current === 1 ? 'disabled' : '' %>" aria-disabled="<%= current === 1 %>">
+      <a href="/?page=1" class="page-link" tabindex="<%= current === 1 ? -1 : 0 %>">First</a>
+    </li>
+
+    <!-- Ellipsis for Previous Pages -->
+    <% if (startPage > 1) { %>
+      <li class="page-item disabled"><span class="page-link">...</span></li>
+    <% } %>
+
+    <!-- Page Links -->
+    <% for (let i = startPage; i <= endPage; i++) { %>
+      <li class="page-item <%= i === current ? 'active' : '' %>">
+        <a href="/?page=<%= i %>" class="page-link"><%= i %></a>
       </li>
-    <% }); %>
+    <% } %>
+
+    <!-- Ellipsis for Next Pages -->
+    <% if (endPage < pages) { %>
+      <li class="page-item disabled"><span class="page-link">...</span></li>
+    <% } %>
+
+    <!-- Last Page -->
+    <li class="page-item <%= current === pages ? 'disabled' : '' %>" aria-disabled="<%= current === pages %>">
+      <a href="/?page=<%= pages %>" class="page-link" tabindex="<%= current === pages ? -1 : 0 %>">Last</a>
+    </li>
   </ul>
-  
-  <!-- Edit Task Modal -->
-  <div class="modal fade" id="editTaskModal" tabindex="-1" aria-labelledby="editTaskModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <form id="editTaskForm" action="" method="POST">
-          <div class="modal-header">
-            <h5 class="modal-title" id="editTaskModalLabel">Edit Task</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            <div class="mb-3">
-              <label for="editTaskTitle" class="form-label">Task Title</label>
-              <input type="text" id="editTaskTitle" name="title" class="form-control" required>
-            </div>
-            <div class="mb-3">
-              <label for="editTaskDescription" class="form-label">Task Description</label>
-              <textarea id="editTaskDescription" name="description" class="form-control" rows="4" required></textarea>
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-            <button type="submit" class="btn btn-primary">Save Changes</button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
-  
-  
-  <!-- JavaScript to Toggle Form -->
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      // Toggle Add Task Form
-      const addTaskButton = document.getElementById("addTaskButton");
-      const addTaskForm = document.getElementById("addTaskForm");
-      const cancelFormBtn = document.getElementById("cancelFormBtn");
-  
-      if (addTaskButton && addTaskForm && cancelFormBtn) {
-        // Show the form when clicking the "Add Task" button
-        addTaskButton.addEventListener("click", () => {
-          addTaskForm.classList.toggle("d-none");
-        });
-  
-        // Hide the form when clicking the "Cancel" button
-        cancelFormBtn.addEventListener("click", () => {
-          addTaskForm.classList.add("d-none");
-        });
-      }
-  
-      // Edit Task Logic
-      const editTaskButtons = document.querySelectorAll(".editTaskButton");
-      const editTaskModalElement = document.getElementById("editTaskModal");
-  
-      if (editTaskModalElement) {
-        const editTaskModal = new bootstrap.Modal(editTaskModalElement);
-        const editTaskForm = document.getElementById("editTaskForm");
-        const editTaskTitle = document.getElementById("editTaskTitle");
-        const editTaskDescription = document.getElementById("editTaskDescription");
-  
-        editTaskButtons.forEach((button) => {
-          button.addEventListener("click", () => {
-            const taskId = button.getAttribute("data-id");
-            const taskTitle = button.getAttribute("data-title");
-            const taskDescription = button.getAttribute("data-description");
-  
-            // Populate the modal form with the current task details
-            editTaskTitle.value = taskTitle;
-            editTaskDescription.value = taskDescription;
-  
-            // Update the form's action URL
-            editTaskForm.action = `/edit-task/${taskId}`;
-  
-            // Show the modal
-            editTaskModal.show();
-          });
-        });
-      }
-      
+</nav>
+
+<!-- JavaScript -->
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const addTaskButton = document.getElementById("addTaskButton");
+    const addTaskForm = document.getElementById("addTaskForm");
+    const cancelFormBtn = document.getElementById("cancelFormBtn");
+    const editTaskModalElement = document.getElementById("editTaskModal");
+    const editTaskModal = new bootstrap.Modal(editTaskModalElement);
+    const editTaskForm = document.getElementById("editTaskForm");
+    const editTaskTitle = document.getElementById("editTaskTitle");
+    const editTaskDescription = document.getElementById("editTaskDescription");
+    const taskList = document.getElementById("taskList");
+
+    // Show/Hide Add Task Form
+    addTaskButton.addEventListener("click", () => {
+      addTaskForm.classList.toggle("d-none");
+      document.getElementById("taskTitle").focus();
     });
-  </script>
-  
-  
+
+    cancelFormBtn.addEventListener("click", () => {
+      addTaskForm.classList.add("d-none");
+      document.getElementById("taskTitle").value = "";
+      document.getElementById("taskDescription").value = "";
+    });
+
+    // Event Delegation for Task Actions
+    taskList.addEventListener("click", (event) => {
+      const target = event.target;
+
+      if (target.classList.contains("editTaskButton")) {
+        // Edit Task Modal
+        editTaskTitle.value = target.dataset.title;
+        editTaskDescription.value = target.dataset.description;
+        editTaskForm.action = `/edit-task/${target.dataset.id}`;
+        editTaskModal.show();
+      }
+    });
+  });
+</script>
