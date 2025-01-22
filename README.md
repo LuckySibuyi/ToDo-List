@@ -1,5 +1,4 @@
 # To-Do List Application
-# CRUD User Management System – Nodejs, Express, MongoDB & EJS (Reupload)
 
 ## Overview
 The To-Do List Application is a lightweight and intuitive task management tool designed to help users organize their daily activities, set priorities, and track progress. This application is suitable for personal use, team projects, or professional task management.
@@ -48,14 +47,22 @@ The To-Do List Application is a lightweight and intuitive task management tool d
 ## Project Structure
 ```
 .
-├── src
-│   ├── components       # React components for UI
-│   ├── pages            # Application pages
-│   ├── utils            # Helper functions
-│   └── styles           # CSS styles
-├── public
-│   └── index.html       # Main HTML file
-└── package.json         # Project dependencies and scripts
+Folder Structure:
+
+ToDo List/
+│
+├── views/           # EJS templates
+│   ├── layout/
+│   │   └── main.ejs # Main layout file
+│   ├── index.ejs    # Home page
+│   └── completed.ejs # Completed tasks page
+│
+├── public/          # Static files (CSS, JS, images)
+│
+├── .env             # Environment variables (e.g., PORT)
+├── app.js           # Main application file
+├── package.json     # Node.js dependencies
+└── package-lock.json
 ```
 
 ## Contributing
