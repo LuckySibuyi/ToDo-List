@@ -5,7 +5,7 @@ const expressLayout = require('express-ejs-layouts');
 const methodOverride = require('method-override');
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 8080;
 
 // Middleware
 app.use(express.urlencoded({ extended: true }));
@@ -37,6 +37,7 @@ app.get('/', (req, res) => {
 });
 
 // Completed tasks route
+
 app.get('/completed', (req, res) => {
   const current = parseInt(req.query.page || 1, 10); // Default to page 1 if not specified
   const pageSize = 10;
