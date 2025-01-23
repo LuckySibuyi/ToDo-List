@@ -100,7 +100,6 @@ app.post('/edit-task/:id', (req, res) => {
 // Delete task
 app.post('/delete-task/:id', (req, res) => {
   const taskId = parseInt(req.params.id);
-
   // Remove the task from the tasks array
   tasks = tasks.filter(t => t.id !== taskId);
 
