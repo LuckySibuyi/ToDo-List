@@ -100,3 +100,14 @@ body {
   padding-top: 10px;
 }
 
+
+.task-title,
+.task-description {
+  max-width: 90%;  
+  white-space: normal; 
+  word-wrap: break-word; 
+  overflow-wrap: break-word; 
+  overflow: hidden; 
+  text-overflow: ellipsis; 
+}
+
