@@ -56,11 +56,11 @@ ToDo-List/
 │   ├── index.ejs    # Home page
 │   └── completed.ejs # Completed tasks page
 |   └── Partials/ 
-│   │   └── sidebar.ejs # 
-│   │   └── hearder.ejs #
+│   │   └── sidebar.ejs
+│   │   └── hearder.ejs
 ├── public/          # Static files (CSS, JS, images)
 │   ├── css/
-│   │   └── main.css # 
+│   │   └── main.css
 │   ├── images/
 | 
 ├── .env             # Environment variables (e.g., PORT)
