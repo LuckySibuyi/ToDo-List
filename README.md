@@ -25,7 +25,7 @@ The To-Do List Application is a lightweight and intuitive task management tool d
    ```
 2. Navigate to the project directory:
    ```bash
-   cd todo-list
+   cd ToDo-List
    ```
 3. Install dependencies:
    ```bash
@@ -42,23 +42,27 @@ The To-Do List Application is a lightweight and intuitive task management tool d
 2. **Editing Tasks**: Click on a task to edit its details.
 3. **Deleting Tasks**: Use the delete icon next to a task to remove it.
 4. **Marking as Completed**: Check the box next to a task title to mark it as done.
-5. **Filtering**: Use the filter options to view tasks by category, status, or due date.
 
 ## Project Structure
 ```
 .
 Folder Structure:
 
-ToDo List/
+ToDo-List/
 │
 ├── views/           # EJS templates
 │   ├── layout/
 │   │   └── main.ejs # Main layout file
 │   ├── index.ejs    # Home page
 │   └── completed.ejs # Completed tasks page
-│
+|   └── Partials/ 
+│   │   └── sidebar.ejs # 
+│   │   └── hearder.ejs #
 ├── public/          # Static files (CSS, JS, images)
-│
+│   ├── css/
+│   │   └── main.css # 
+│   ├── images/
+| 
 ├── .env             # Environment variables (e.g., PORT)
 ├── app.js           # Main application file
 ├── package.json     # Node.js dependencies
