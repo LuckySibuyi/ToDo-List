@@ -21,7 +21,7 @@ The To-Do List Application is a lightweight and intuitive task management tool d
 ### Installation
 1. Clone the repository:
    ```bash
-   git clone https://github.com/username/todo-list.git
+   git clone https://github.com/LuckySibuyi/ToDo-List.git
    ```
 2. Navigate to the project directory:
    ```bash
@@ -35,7 +35,7 @@ The To-Do List Application is a lightweight and intuitive task management tool d
    ```bash
    npm start
    ```
-5. Open the application in your browser at `http://localhost:3000`.
+5. Open the application in your browser at `http://localhost:8080`.
 
 ## Usage
 1. **Adding Tasks**: Use the "+ Add Task" button to create a new task.
@@ -84,6 +84,3 @@ This project is licensed under the [MIT License](LICENSE).
 ## Acknowledgments
 - Inspiration from various task management tools.
 - Thanks to the open-source community for libraries and resources.
-
-## Contact
-For issues or feature requests, please open an issue on [GitHub](https://github.com/username/todo-list/issues).
